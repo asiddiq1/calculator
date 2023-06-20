@@ -21,7 +21,7 @@
 
 .display{
     display: flex;
-    height: 100px;
+    height: 120px;
     background-color: #110E13;
     flex-direction: column;
     color: white;
@@ -36,7 +36,6 @@
     display: flex;
     justify-content: center;
     font-style: italic;
-    align-items: right;
     align-items: flex-end;
     font-size: 20px;
 }

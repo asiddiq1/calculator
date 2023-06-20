@@ -1,0 +1,145 @@
+.keypad > *{
+
+    display: flex;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.calculator{
+    display: flex;
+    flex-direction: column;
+    width: 325px;
+    height: 520px;
+    padding: 20px;
+    border-radius: 5%;
+    gap: 10px;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.display{
+    display: flex;
+    height: 100px;
+    background-color: #110E13;
+    flex-direction: column;
+    color: white;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+
+
+}
+
+.upper.display{
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    font-style: italic;
+    align-items: right;
+    align-items: flex-end;
+    font-size: 20px;
+}
+
+.lower.display{
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 30px;
+
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    margin: 0px;;
+    background-color: black;
+}
+
+
+button{
+    height: 65px;
+    width: 65px;
+    border-radius: 10%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+    border: none;
+    outline: none;
+    background-color: #110E13;
+    cursor: pointer;
+    z-index: 9; 
+
+}
+
+.keypad{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.outer{
+
+    height: 70px;
+    width: 70px;
+    position: relative;
+    border-radius: 10%;
+}
+
+.outer button, .outer span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+
+}
+
+.outer span{
+    height: 100%;
+    width: 100%;
+    background: inherit;
+    border-radius: 10%;
+}
+
+.outer span:nth-child(1){
+    filter: blur(7px);
+}
+
+.outer span:nth-child(2){
+    filter: blur(10px);
+}
+
+.outer:hover{
+    animation: rotate 1.5s linear infinite;
+    background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+}
+
+@keyframes rotate {
+    0%{
+        filter: hue-rotate(0deg);
+    }
+    100%{
+        filter: hue-rotate(360deg);
+    }
+}
+
+
+ footer{
+    color: white;
+    margin-bottom: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+ }
+
+ .page-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+ }

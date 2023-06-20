@@ -32,7 +32,7 @@
 }
 
 .upper.display{
-    height: 30px;
+    height: 40px;
     display: flex;
     justify-content: center;
     font-style: italic;
@@ -71,7 +71,8 @@ button{
     outline: none;
     background-color: #110E13;
     cursor: pointer;
-    z-index: 9; 
+    z-index: 9;
+    text-align: center;
 
 }
 

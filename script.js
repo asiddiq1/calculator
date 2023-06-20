@@ -1,32 +1,32 @@
 
 
-let isDecimal = false; 
-let isPositive = true;
-let isNegative = false;
-
 let txtDisplay = '0';
 let upperDisplayTxt = '';
 
-let lowerDisplay = document.querySelector('.lower');
-let upperDisplay = document.querySelector('.upper');
+const lowerDisplay = document.querySelector('.lower');
+const upperDisplay = document.querySelector('.upper');
+const keypad = document.querySelector('.keypad');
 
-keypad = document.querySelector('.keypad');
-
-keypad.addEventListener('click', function(e){
-    let option = e.target.getAttribute("data-option");
-    calculator(option);
-
-});
 
 window.addEventListener('keydown', function(e){
     let obj = document.querySelector(`button[data-option="${e.key}"]`);
+    if (e.key == 'Enter' && !upperDisplayTxt) e.preventDefault();
+    if (e.key == 'Enter' && upperDisplayTxt)
+        obj = document.querySelector(`button[data-option="="]`);
     try{
         let option = obj.getAttribute("data-option");
-        calculator(option);
-    }
+        calculator(option);}
     catch (e){
         return;
     }
+});
+
+
+keypad.addEventListener('click', function(e){
+    let option = e.target.getAttribute("data-option");
+    if (!option) return;
+    calculator(option);
+
 });
 
 
@@ -64,9 +64,8 @@ const mod = function(num1, num2){
 
 const checkDecimal = function(txt){
     if (txt == '.'){
-         if (!isDecimal){
-            txtDisplay += txt; 
-            isDecimal = true;      
+         if (!txtDisplay.includes('.')){
+            txtDisplay += txt;      
     }
 }
 
@@ -74,17 +73,12 @@ const checkDecimal = function(txt){
 
 const checkSign = function(txt){
     if (txt == 'sign'){
-        if (isPositive){
-            txtDisplay = '-' + txtDisplay;
-            isNegative = true; 
-            isPositive = false; 
-        }
-        else if (isNegative){
+        if (txtDisplay.includes('-')){
             txtDisplay = txtDisplay.substring(1);
-            isPositive = true;
-            isNegative = false; 
-        } 
-
+        }
+        else{
+            txtDisplay = '-' + txtDisplay;
+        }
     }
     lowerDisplay.textContent = txtDisplay;
    
@@ -97,9 +91,7 @@ const displayTxt = function(txt){
         txtDisplay = txtDisplay.slice(0, -1);
         txtDisplay += txt; 
     }
-    else if (+txt == 0 && (txtDisplay == '0' || txtDisplay == '-0')){
-        console.log('tgfgf');
-    }
+    else if (+txt == 0 && (txtDisplay == '0' || txtDisplay == '-0')){}
     else if (+txt || +txt == 0){
         txtDisplay += txt; 
     }
@@ -110,11 +102,7 @@ const displayTxt = function(txt){
 
 const deleteLast = function(txt){
     if (txt == 'Backspace'){
-        lastStr = txtDisplay.slice(-1);
-        if (lastStr == '.'){
-            isDecimal = false;
-        }
-        if (txtDisplay.length <= 1){
+        if ((txtDisplay.length <= 1) || (txtDisplay.includes('-') && txtDisplay.length == 2)){
             txtDisplay = '0';
         }
         else{
@@ -125,13 +113,10 @@ const deleteLast = function(txt){
 }
 
 const clearAll = function(txt){
-    if (txt == 'ac'){
+    if (txt == 'Escape'){
         txtDisplay = '0';
         upperDisplayTxt = '';
         upperDisplay.textContent = upperDisplayTxt;
-        isDecimal = false; 
-        isPositive = true;
-        isNegative = false;
 
     }
 }
@@ -146,34 +131,27 @@ const checkOperator = function(op){
             txtDisplay = '0';
             lowerDisplay.textContent = txtDisplay;
         }
-        else{
-            
-            upperDisplayTxt = upperDisplayTxt.slice(0, -1) + '' + op;
-             
+        else{        
+            upperDisplayTxt = upperDisplayTxt.slice(0, -1) + '' + op;      
         }
         
         upperDisplay.textContent = upperDisplayTxt;
-        isDecimal = false; 
-        isPositive = true;
-        isNegative = false;
     }
     
 }
 
 const checkEquals = function(op){
-    if (op == 'Enter'){
+    if (op == '='){
         if (upperDisplayTxt)
         {
             let arr = upperDisplayTxt.split(" ");
             let operatedNumber = operate(arr[1], +arr[0], +txtDisplay);
             txtDisplay = operatedNumber.toString();
-            console.log(txtDisplay);
             if (txtDisplay.includes('.')){
                 txtDisplay = (+txtDisplay).toFixed(2);
             }
             else if (txtDisplay.length > 10) {
-                let txtToNum = +txtDisplay;
-                let num = txtToNum.toExponential(2);
+                let num = (+txtDisplay).toExponential(2);
                 txtDisplay = num.toString();
             }
             lowerDisplay.textContent = txtDisplay;
@@ -188,21 +166,19 @@ const checkEquals = function(op){
 
 
 const operate = function(op, num1, num2){
-    if (op == '+'){
-        return add(num1, num2);
-    }
-    else if (op == '-'){
-        return subtract(num1, num2);
-    }
-    else if (op == '*'){
-        return multiply(num1, num2);
 
-    }
-    else if (op == '/'){
-        return divide(num1, num2); 
-    }
-    else{
-        return mod(num1, num2); 
+    switch(op){
+        case '+':
+            return add(num1, num2);
+        case '-':
+            return subtract(num1, num2);
+        case '*':
+            return multiply(num1, num2);
+        case '/':
+            return divide(num1, num2); 
+        case '%':
+            return mod(num1, num2); 
+
     }
 
 }
